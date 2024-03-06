@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/ducks")
-public class DuckController {
+public class DuckController{
 
     private DucksRepository ducksRepository;
 
@@ -36,7 +36,10 @@ public class DuckController {
     @GetMapping
     public List<DuckData> findAll() {
         try {
-            return ducksRepository.findAll();
+            //sort the duck by type
+            List<DuckData> list = ducksRepository.findAll();
+            list.sort((o1, o2) -> o1.type().compareTo(o2.type()));
+            return list;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -103,5 +106,7 @@ public class DuckController {
             throw new RuntimeException(e);
         }
     }
+
+
 
 }
